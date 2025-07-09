@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Header from '../components/Header';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -54,25 +55,11 @@ export default function ContactForm() {
 
   return (
     <div className="min-h-screen bg-clifford-white">
-      {/* Header */}
-      <header className="bg-clifford-navy text-clifford-white py-4">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center">
-              <div className="w-8 h-8 bg-clifford-blue rounded-lg flex items-center justify-center mr-3">
-                <span className="text-clifford-navy font-bold">C</span>
-              </div>
-              <span className="text-lg font-semibold">Clifford IT</span>
-            </Link>
-            <Link href="/" className="text-clifford-blue hover:text-clifford-white transition-colors">
-              ← Back to Home
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Dynamic Header */}
+      <Header />
 
       {/* Contact Form Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-16 lg:py-24 pt-24">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-3xl sm:text-4xl font-bold text-clifford-navy mb-4">Start Your Project</h1>

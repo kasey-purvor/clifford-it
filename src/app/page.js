@@ -16,7 +16,7 @@ export default function Home() {
             src="/background.jpg"
             alt="Background"
             fill
-            className="object-cover  brightness-70   opacity-40"
+            className="object-cover  brightness-50   opacity-40"
             priority
             quality={85}
           />
@@ -199,23 +199,23 @@ export default function Home() {
               </div>
               
               <div className="space-y-4">
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <div className="w-10 h-10 bg-clifford-blue rounded-lg flex items-center justify-center mr-4">
                     <svg className="w-5 h-5 text-clifford-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <span className="text-gray-600">contact@clifford-it.com</span>
-                </div>
+                </div> */}
                 
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <div className="w-10 h-10 bg-clifford-blue rounded-lg flex items-center justify-center mr-4">
                     <svg className="w-5 h-5 text-clifford-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6" />
                     </svg>
                   </div>
                   <span className="text-gray-600">Professional Consultancy Services</span>
-                </div>
+                </div> */}
               </div>
             </div>
             
@@ -234,10 +234,19 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <div className="w-8 h-8 bg-clifford-blue rounded-lg flex items-center justify-center mr-3">
-                <span className="text-clifford-navy font-bold">C</span>
+              <div className="mr-3">
+                <Image
+                  src="/logo_black_no_background.png"
+                  alt="Clifford IT Logo"
+                  width={300}
+                  height={300}
+                  className="object-contain filter invert brightness-0 contrast-100"
+                  style={{
+                    filter: 'invert(1) brightness(2) contrast(1)'
+                  }}
+                />
               </div>
-              <span className="text-lg font-semibold">Clifford IT</span>
+              {/* <span className="text-lg font-semibold">Clifford IT</span> */}
             </div>
             <p className="text-clifford-blue opacity-80">
               Intelligent Technology Solutions for Modern Business
