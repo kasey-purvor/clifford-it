@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --clifford-blue: #97afaf;
+  --clifford-navy: #1a1a2e;
+  --clifford-white: #ffffff;
 }
 
 @theme inline {
@@ -10,6 +13,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-clifford-blue: var(--clifford-blue);
+  --color-clifford-navy: var(--clifford-navy);
+  --color-clifford-white: var(--clifford-white);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +28,17 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+/* Custom Clifford IT color classes */
+.bg-clifford-blue { background-color: #97afaf; }
+.bg-clifford-navy { background-color: #1a1a2e; }
+.bg-clifford-white { background-color: #ffffff; }
+.text-clifford-blue { color: #97afaf; }
+.text-clifford-navy { color: #1a1a2e; }
+.text-clifford-white { color: #ffffff; }
+.border-clifford-blue { border-color: #97afaf; }
+.border-clifford-navy { border-color: #1a1a2e; }
+.hover\:bg-clifford-navy:hover { background-color: #1a1a2e; }
+.hover\:bg-clifford-blue:hover { background-color: #97afaf; }
