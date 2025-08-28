@@ -41,7 +41,6 @@ export default function Header() {
                 }}
               />
             </div>
-            <h1 className="text-xl font-bold">Clifford IT</h1>
           </div>
           
           {/* Navigation */}

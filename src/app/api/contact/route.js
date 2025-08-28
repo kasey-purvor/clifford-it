@@ -18,7 +18,7 @@ export async function POST(request) {
     // Send email using Resend
     const emailData = await resend.emails.send({
       from: 'contact@clifford-it.com', // Replace with your verified domain
-      to: 'kasey.purvor@gmail.com',
+      to: 'kasey@clifford-it.com',
       subject: `New Project Inquiry - ${contactMethod.charAt(0).toUpperCase() + contactMethod.slice(1)} Contact`,
       html: `
         <h2>New Project Inquiry</h2>

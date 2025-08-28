@@ -1,8 +1,59 @@
+'use client';
+
+import { useState } from 'react';
 import Header from './components/Header';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
+  const [formData, setFormData] = useState({
+    message: '',
+    contactMethod: 'email',
+    contactInfo: ''
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          message: '',
+          contactMethod: 'email',
+          contactInfo: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
     <div className="min-h-screen bg-clifford-white">
       {/* Dynamic Header */}
@@ -69,7 +120,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                 </svg>
               </div>
-              <h4 className="text-xl font-semibold text-clifford-navy mb-4">Automated Web Browsing</h4>
+              <h4 className="text-xl font-semibold text-clifford-navy mb-4">Automate Web Browsing/Scraping</h4>
               <p className="text-gray-600 leading-relaxed">
                 Want to automate your lead generation process or know your competitors prices? Our tried and tested solution consistently outperforms 'off the shelf' solutions from large scraping bureaus.
               </p>
@@ -114,7 +165,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
             {/* Software Engineering */}
             <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-clifford-blue rounded-lg flex items-center justify-center mb-6">
@@ -142,7 +193,7 @@ export default function Home() {
             </div>
 
             {/* AI & Machine Learning */}
-            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow md:col-span-2 lg:col-span-1">
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-clifford-blue rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-clifford-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -151,6 +202,19 @@ export default function Home() {
               <h4 className="text-xl font-semibold text-clifford-navy mb-4">AI & Machine Learning</h4>
               <p className="text-gray-600 leading-relaxed">
                 Intelligent automation and machine learning applications to revolutionize your business processes.
+              </p>
+            </div>
+
+            {/* Website Design & Deployment */}
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+              <div className="w-12 h-12 bg-clifford-blue rounded-lg flex items-center justify-center mb-6">
+                <svg className="w-6 h-6 text-clifford-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h4 className="text-xl font-semibold text-clifford-navy mb-4">Website Design & Deployment</h4>
+              <p className="text-gray-600 leading-relaxed">
+                Low one-time costs, complete ownership, no monthly fees. Future support is extremely affordable with AI-powered tools.
               </p>
             </div>
           </div>
@@ -219,11 +283,94 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Contact Button */}
-            <div className="flex items-center justify-center lg:justify-start">
-              <Link href="/contact" className="inline-block bg-clifford-navy text-clifford-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto">
-                Start Your Project
-              </Link>
+            {/* Contact Form */}
+            <div>
+              <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                {/* Message Field */}
+                <div className="mb-4">
+                  <label htmlFor="message" className="block text-sm font-medium text-clifford-navy mb-2">
+                    Project Description / Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-clifford-blue focus:border-transparent resize-none text-sm"
+                    placeholder="Tell us about your project, requirements, or any questions you have..."
+                  />
+                </div>
+
+                {/* Contact Method Selection */}
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-clifford-navy mb-2">
+                    Preferred Contact Method *
+                  </label>
+                  <div className="flex space-x-4 mb-3">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="contactMethod"
+                        value="email"
+                        checked={formData.contactMethod === 'email'}
+                        onChange={handleChange}
+                        className="mr-2 text-clifford-blue focus:ring-clifford-blue"
+                      />
+                      <span className="text-gray-700 text-sm">Email</span>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="contactMethod"
+                        value="phone"
+                        checked={formData.contactMethod === 'phone'}
+                        onChange={handleChange}
+                        className="mr-2 text-clifford-blue focus:ring-clifford-blue"
+                      />
+                      <span className="text-gray-700 text-sm">Phone</span>
+                    </label>
+                  </div>
+
+                  {/* Contact Info Field */}
+                  <input
+                    type={formData.contactMethod === 'email' ? 'email' : 'tel'}
+                    name="contactInfo"
+                    required
+                    value={formData.contactInfo}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-clifford-blue focus:border-transparent text-sm"
+                    placeholder={formData.contactMethod === 'email' ? 'your.email@example.com' : '+1 (555) 123-4567'}
+                  />
+                </div>
+
+                {/* Status Messages */}
+                {submitStatus === 'success' && (
+                  <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-green-800 text-sm">✅ Message sent successfully! We'll get back to you soon.</p>
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-800 text-sm">❌ Failed to send message. Please try again or contact us directly.</p>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-lg ${
+                    isSubmitting 
+                      ? 'bg-gray-400 cursor-not-allowed' 
+                      : 'bg-clifford-navy text-clifford-white hover:bg-clifford-blue transform hover:scale-105'
+                  }`}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
             </div>
           </div>
         </div>
